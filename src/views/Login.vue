@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import axios from 'axios';
     export default {
         data() {
             return {
@@ -47,9 +48,12 @@
                     })
                     return
                 }
-                let user = {username:this.input1,password:this.input2}
-                localStorage.setItem('user',JSON.stringify(user))
-                this.$router.push('/')
+                let obj = {username:this.input1,password:this.input2}
+                axios.post('/api/login',obj).then(res=>{
+                    console.log(res.data);
+                })
+                // localStorage.setItem('user',JSON.stringify(user))
+                // this.$router.push('/')
             }
         },
     }
