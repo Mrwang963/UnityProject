@@ -5,7 +5,9 @@
         <MyMenuVue/>
       </el-aside>
       <el-container>
-        <el-header>头部</el-header>
+        <el-header>
+          <Head/>
+        </el-header>
         <el-main>
           <router-view></router-view>
         </el-main>
@@ -17,10 +19,12 @@
 
 <script>
 import MyMenuVue from '@/layout/MyMenu.vue'
+import Head from '@/views/Head.vue'
 export default {
   name: 'HomeView',
   components: {
-    MyMenuVue
+    MyMenuVue,
+    Head
   }
 }
 </script>

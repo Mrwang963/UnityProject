@@ -21,6 +21,11 @@ const routes = [
     component: HomeView,
     redirect:'/wel',
     children:child
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component:()=>import('@/views/Login.vue')
   }
 ]
 
@@ -30,4 +35,16 @@ const router = new VueRouter({
   routes
 })
 
+router.beforeEach((to,from,next)=>{
+  const user = localStorage.getItem('user');
+  if(!user){
+    if(to.path == '/wel'){
+      next('/login')
+    }else{
+      next()
+    }
+  }else{
+    next()
+  }
+})
 export default router
