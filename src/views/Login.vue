@@ -26,6 +26,7 @@
 
 <script>
 import axios from 'axios';
+import { log } from 'async';
     export default {
         data() {
             return {
@@ -50,10 +51,20 @@ import axios from 'axios';
                 }
                 let obj = {username:this.input1,password:this.input2}
                 axios.post('/api/login',obj).then(res=>{
-                    console.log(res.data);
+                    if(res.data.status == 200){
+                        this.$message({
+                            message:res.data.msg,
+                            type:'success'
+                        })
+                    localStorage.setItem('user',JSON.stringify(obj))
+                    this.$router.push('/')
+                    }else{
+                        this.$message({
+                            message:res.data.data,
+                            type:'warning'
+                        })
+                    }
                 })
-                // localStorage.setItem('user',JSON.stringify(user))
-                // this.$router.push('/')
             }
         },
     }

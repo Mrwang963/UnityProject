@@ -24,8 +24,25 @@ function getToken(){
 }
 
 app.post('/login',async(req,res)=>{
+    let token = getToken()
     let data = req.body;
-    res.send(data)
+    let sql = `select * from user where UserName = '${data.username}'`
+    let result = await pro.pro(sql);
+    if(result.status == 200){
+        if(result.data.length == 0){
+            res.send(pro.fail_return('账号不存在'))
+        }else{
+            sql = `select * from user where UserName = '${data.username}' and PassWord = '${data.password}'`
+            result = await pro.pro(sql);
+            if(result.data.length == 0){
+                res.send(pro.fail_return('密码错误'))
+            }else{
+                res.send(pro.success_return(result.data[0],'登陆成功'))
+            }
+        }
+    }else{
+        res.send(result)
+    }
 })
 
 
